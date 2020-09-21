@@ -1,65 +1,63 @@
-import React, { Component } from 'react';
-import './App.css';
-import { Button } from './components/Button';
-import { Input} from './components/Input';
-import { ClearButton} from './components/ClearButton';
+import React, { useState } from 'react';
+import styles from './App.module.css';
+import Button from './components/Button';
+import Input from './components/Input';
+import ClearButton from './components/ClearButton';
 import * as math from 'mathjs';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+const App = props => {
+  const [inputState, setInputState] = useState({
+    input: ""
+  });
 
-    this.state = {
-      input: ''
-    };
+  const addToInput = val => {
+    setInputState({
+      input: inputState.input + val
+    });
   }
 
-  addToInput = val => {
-      this.setState({input: this.state.input + val});
+  const handleEqual = () => {
+    setInputState({
+      input: math.evaluate(inputState.input)
+    });
   }
 
-handleEqual = () => {
-  this.setState({input: math.evaluate(this.state.input)});
-}
-
-  render() {
-    return (
-      <div className="app">
-        <div className="calc-wrapper">
-          <Input input={this.state.input}></Input>
-          <div className="row">
-            <Button handleClick={this.addToInput}>7</Button>
-            <Button handleClick={this.addToInput}>8</Button>
-            <Button handleClick={this.addToInput}>9</Button>
-            <Button handleClick={this.addToInput}>/</Button>
-          </div>
-          <div className="row">
-            <Button handleClick={this.addToInput}>4</Button>
-            <Button handleClick={this.addToInput}>5</Button>
-            <Button handleClick={this.addToInput}>6</Button>
-            <Button handleClick={this.addToInput}>*</Button>
-          </div>
-          <div className="row">
-            <Button handleClick={this.addToInput}>1</Button>
-            <Button handleClick={this.addToInput}>2</Button>
-            <Button handleClick={this.addToInput}>3</Button>
-            <Button handleClick={this.addToInput}>+</Button>
-          </div>
-          <div className="row">
-            <Button handleClick={this.addToInput}>.</Button>
-            <Button handleClick={this.addToInput}>0</Button>
-            <Button handleClick={() => this.handleEqual()}>=</Button>
-            <Button handleClick={this.addToInput}>-</Button>
-          </div>
-          <div className="row">
-            <ClearButton handleClear={() => this.setState({ input: "" })}>
-              Clear
-            </ClearButton>
-          </div>
+  return (
+    <div className = {styles.app}>
+      <div className= {styles.calcWrapper}>
+        <Input input={inputState.input} />
+        <div className={styles.row}>
+          <Button content="7" handleClick={addToInput} />
+          <Button content="8" handleClick={addToInput} />
+          <Button content="9" handleClick={addToInput} />
+          <Button content="/" handleClick={addToInput} />
+        </div>
+        <div className={styles.row}>
+          <Button content="4" handleClick={addToInput} />
+          <Button content="5" handleClick={addToInput} />
+          <Button content="6" handleClick={addToInput} />
+          <Button content="*" handleClick={addToInput} />
+        </div>
+        <div className={styles.row}>
+          <Button content="1" handleClick={addToInput} />
+          <Button content="2" handleClick={addToInput} />
+          <Button content="3" handleClick={addToInput} />
+          <Button content="+" handleClick={addToInput} />
+        </div>
+        <div className={styles.row}>
+          <Button content="." handleClick={addToInput} />
+          <Button content="0" handleClick={addToInput} />
+          <Button content="=" handleClick={() => handleEqual()} />
+          <Button content="-" handleClick={addToInput} />
+        </div>
+        <div className={styles.row}>
+          <ClearButton handleClear={() => setInputState({ input: "" })}>
+            Clear
+          </ClearButton>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default App;
