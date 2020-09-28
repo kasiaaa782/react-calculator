@@ -6,26 +6,20 @@ import ClearButton from './components/ClearButton';
 import * as math from 'mathjs';
 
 const App = props => {
-  const [inputState, setInputState] = useState({
-    input: ""
-  });
+  const [input, setInput] = useState("");
 
   const addToInput = val => {
-    setInputState({
-      input: inputState.input + val
-    });
+    setInput( input + val );
   }
 
   const handleEqual = () => {
-    setInputState({
-      input: math.evaluate(inputState.input)
-    });
+    setInput( math.evaluate(input) );
   }
 
   return (
     <div className = {styles.app}>
       <div className= {styles.calcWrapper}>
-        <Input input={inputState.input} />
+        <Input content={input} />
         <div className={styles.row}>
           <Button content="7" handleClick={addToInput} />
           <Button content="8" handleClick={addToInput} />
@@ -51,7 +45,7 @@ const App = props => {
           <Button content="-" handleClick={addToInput} />
         </div>
         <div className={styles.row}>
-          <ClearButton handleClear={() => setInputState({ input: "" })}>
+          <ClearButton handleClear={() => setInput("")}>
             Clear
           </ClearButton>
         </div>
