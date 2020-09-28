@@ -2,27 +2,22 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './Button.module.css';
 
-const isOperator = val => {
-    return !isNaN(val) || val === "." || val === "=";
+const isNotOperator = val => {
+    return !isNaN(val) || val === "." || val === "=" ? false : true;
 }
 
 const Button = ({ content, handleClick }) => {
-    const isoperator = isOperator(content) ? false : true;
-    
     const classValue = classNames({
-        [ styles.buttonWrapper ] : true,
-        [ styles.operator ] : isoperator
+        [styles.buttonWrapper] : true,
+        [styles.operator] : isNotOperator(content)
     });
-
     return(
         <div className={classValue} 
             onClick={() => handleClick(content)} 
         >
             {content}
         </div>
-
     );
-
 };
 
 export default Button;

@@ -8,41 +8,33 @@ import * as math from 'mathjs';
 const App = props => {
   const [input, setInput] = useState("");
 
-  const addToInput = val => {
-    setInput( input + val );
-  }
+  const addToInput = val => setInput( input + val );
 
-  const handleEqual = () => {
-    setInput( math.evaluate(input) );
-  }
+  const handleEqual = () => setInput( math.evaluate(input) );
+
+  const renderButtons = tab => (
+    tab.map(value => {
+      return value != '=' ? 
+        <Button content={value} handleClick={addToInput} /> :
+        <Button content={value} handleClick={() => handleEqual()} />
+    })
+  )
 
   return (
     <div className = {styles.app}>
       <div className= {styles.calcWrapper}>
         <Input content={input} />
         <div className={styles.row}>
-          <Button content="7" handleClick={addToInput} />
-          <Button content="8" handleClick={addToInput} />
-          <Button content="9" handleClick={addToInput} />
-          <Button content="/" handleClick={addToInput} />
+          {renderButtons(['7','8','9','/'])}
         </div>
         <div className={styles.row}>
-          <Button content="4" handleClick={addToInput} />
-          <Button content="5" handleClick={addToInput} />
-          <Button content="6" handleClick={addToInput} />
-          <Button content="*" handleClick={addToInput} />
+          {renderButtons(['4','5','6','*'])}
         </div>
         <div className={styles.row}>
-          <Button content="1" handleClick={addToInput} />
-          <Button content="2" handleClick={addToInput} />
-          <Button content="3" handleClick={addToInput} />
-          <Button content="+" handleClick={addToInput} />
+          {renderButtons(['1','2','3','+'])}
         </div>
         <div className={styles.row}>
-          <Button content="." handleClick={addToInput} />
-          <Button content="0" handleClick={addToInput} />
-          <Button content="=" handleClick={() => handleEqual()} />
-          <Button content="-" handleClick={addToInput} />
+          {renderButtons(['.','0','=','-'])}
         </div>
         <div className={styles.row}>
           <ClearButton handleClear={() => setInput("")}>
